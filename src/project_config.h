@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "mcu_support_package/inc/stm32f10x.h"
+#include "stm32f1xx_hal.h"
 
 #include "global_macros/global_macros.h"
 //#include "global_macros/stm32f1xx_global_macros.h"
