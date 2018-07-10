@@ -333,7 +333,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--feedback=unused</MiscControls>
+              <MiscControls>--feedback=unused </MiscControls>
               <Define>STM32F103xB, SYSCLK_FREQ_HSE</Define>
               <Undefine></Undefine>
               <IncludePath>.\src\cmsis;.\src;.\src\mcu_support_package\inc;.\src\main;.\src\hal;.\src\usb</IncludePath>

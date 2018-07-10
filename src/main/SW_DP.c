@@ -19,7 +19,7 @@
  * limitations under the License.
  */
 
-#include "main.h"
+#include "pin_config.h"
 #include "DAP_config.h"
 #include "DAP.h"
 

@@ -1,10 +1,9 @@
-
-/* Includes ------------------------------------------------------------------*/
-#include "main.h"
 #include "stm32f1xx_hal.h"
 #include "usb_device.h"
+#include "pin_config.h"
 
-/* Private variables ---------------------------------------------------------*/
+/* --pch  --pch_dir=lst --no_pch_messages */
+
 TIM_HandleTypeDef htim3;
 TIM_HandleTypeDef htim4;
 
@@ -16,10 +15,6 @@ UART_HandleTypeDef huart2;
 DMA_HandleTypeDef hdma_usart2_rx;
 DMA_HandleTypeDef hdma_usart2_tx;
 
-///* Private variables ---------------------------------------------------------*/
-
-
-///* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 void Error_Handler(void);
 static void MX_GPIO_Init(void);
@@ -34,9 +29,9 @@ extern void HAL_TIM4_PeriodElapsedCallback();
 
 int main(void)
 {
-//  /* MCU Configuration----------------------------------------------------------*/
+	/* MCU Configuration----------------------------------------------------------*/
 
-//  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+	/* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
 
   /* Configure the system clock */
@@ -59,8 +54,8 @@ int main(void)
 
 }
 
-///** System Clock Configuration
-//*/
+/** System Clock Configuration
+*/
 void SystemClock_Config(void)
 {
 
@@ -245,15 +240,18 @@ static void MX_GPIO_Init(void)
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOC_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_SET);
-
+  
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, DAP_LED_1_Pin|DAP_LED_2_Pin|USB_FS_Pin, GPIO_PIN_RESET);
-
+  HAL_GPIO_WritePin(DAP_LED_1_GPIO_Port, DAP_LED_1_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(DAP_LED_2_GPIO_Port, DAP_LED_2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(USB_FS_GPIO_Port, USB_FS_Pin, GPIO_PIN_RESET);
+  
   /*Configure GPIO pin : LED1_Pin */
   GPIO_InitStruct.Pin = LED1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
@@ -261,27 +259,27 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_Init(LED1_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PC14 PC15 */
-  GPIO_InitStruct.Pin = GPIO_PIN_14|GPIO_PIN_15;
+  GPIO_InitStruct.Pin = GPIO_PIN_14 | GPIO_PIN_15;
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : DAP_LED_1_Pin DAP_LED_2_Pin */
-  GPIO_InitStruct.Pin = DAP_LED_1_Pin|DAP_LED_2_Pin;
+  /*Configure GPIO pins : DAP_LED_1_Pin*/
+  GPIO_InitStruct.Pin = DAP_LED_1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : SWDIO_Pin SWCLK_Pin nRESET_Pin */
-  GPIO_InitStruct.Pin = SWDIO_Pin|SWCLK_Pin|nRESET_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_PULLUP;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
+  HAL_GPIO_Init(LED1_GPIO_Port, &GPIO_InitStruct); 
+  
+  /*Configure GPIO pins : DAP_LED_2_Pin */
+  GPIO_InitStruct.Pin = DAP_LED_2_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(LED1_GPIO_Port, &GPIO_InitStruct); 
+    
   /*Configure GPIO pins : USB_FS_Pin */
   GPIO_InitStruct.Pin = USB_FS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+  HAL_GPIO_Init(USB_FS_GPIO_Port, &GPIO_InitStruct);
 
 }
 

@@ -19,7 +19,7 @@
  * limitations under the License.
  */
 
-#include "main.h"
+#include "pin_config.h"
 #include "string.h"
 #include "DAP_config.h"
 #include "DAP.h"
@@ -35,13 +35,20 @@ static void PORT_SWD_SETUP(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct;
 
-  GPIOA->BSRR = SWCLK_Pin | SWDIO_Pin;
-  GPIOA->BRR  = nRESET_Pin;
-
-  GPIO_InitStruct.Pin = SWDIO_Pin|SWCLK_Pin;
+  SWDIO_PORT->BSRR = SWDIO_PIN;
+  SWCLK_PORT->BSRR = SWCLK_PIN;
+  
+  nRESET_PORT->BRR = nRESET_PIN;
+  
+  GPIO_InitStruct.Pin = SWDIO_PIN;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+  HAL_GPIO_Init(SWDIO_PORT, &GPIO_InitStruct);
+  
+  GPIO_InitStruct.Pin = SWCLK_PIN;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+  HAL_GPIO_Init(SWCLK_PORT, &GPIO_InitStruct);
 
   PIN_nRESET_HIGH();
 }
@@ -55,10 +62,20 @@ static void PORT_OFF(void)
   GPIO_InitTypeDef GPIO_InitStruct;
 
   /*Configure GPIO pins : SWDIO_Pin SWCLK_Pin nRESET_Pin */
-  GPIO_InitStruct.Pin = SWDIO_Pin|SWCLK_Pin|nRESET_Pin;
+  GPIO_InitStruct.Pin = SWDIO_PIN;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+  HAL_GPIO_Init(SWDIO_PORT, &GPIO_InitStruct);
+  
+  GPIO_InitStruct.Pin = SWCLK_PIN;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(SWCLK_PORT, &GPIO_InitStruct);
+  
+  GPIO_InitStruct.Pin = nRESET_PIN;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(nRESET_PORT, &GPIO_InitStruct);
 }
 
 // Get DAP Information
