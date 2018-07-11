@@ -1,8 +1,6 @@
-/* Define to prevent recursive inclusion -------------------------------------*/ 
 #ifndef __USB_DAP_CDC_H
 #define __USB_DAP_CDC_H
 
-/* Includes ------------------------------------------------------------------*/
 #include  "usbd_ioreq.h"
 
 #define USB_DAP_CDC_CONFIG_DESC_SIZ   107

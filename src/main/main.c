@@ -323,4 +323,3 @@ void Error_Handler(void)
   /* USER CODE END Error_Handler */ 
 }
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
