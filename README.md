@@ -1,7 +1,7 @@
 # YOBA-DAP-Programmer
 Версия программатора-отладчика YOBA-DAP на базе STM32f10x.
 Доступно только SWD.
-## Сборка
+## Сборка 
 Проект собран для Keil 5.
 
 ## Настройка и подключение
@@ -17,3 +17,5 @@
 **После их изменения Проект необходимо пересобрать**
 ## USB 
 USB подцеплено к пинам 11 и 12 на порте A
+## Настройка Keil'а под YOBA-DAP
+![Image alt](https://github.com/ArtemZaZ/YOBA-DAP-Programmer/raw/stm32f1xx/images/yoba-dap-config.png)
