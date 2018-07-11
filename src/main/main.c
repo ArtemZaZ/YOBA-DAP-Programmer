@@ -245,18 +245,18 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOA_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(LED1_GPIO_PORT, LED1_PIN, GPIO_PIN_SET);
   
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(DAP_LED_1_GPIO_Port, DAP_LED_1_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(DAP_LED_2_GPIO_Port, DAP_LED_2_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(USB_FS_GPIO_Port, USB_FS_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(DAP_LED_1_GPIO_PORT, DAP_LED_1_PIN, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(DAP_LED_2_GPIO_PORT, DAP_LED_2_PIN, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(USB_FS_GPIO_PORT, USB_FS_PIN, GPIO_PIN_RESET);
   
   /*Configure GPIO pin : LED1_Pin */
-  GPIO_InitStruct.Pin = LED1_Pin;
+  GPIO_InitStruct.Pin = LED1_PIN;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(LED1_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(LED1_GPIO_PORT, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PC14 PC15 */
   GPIO_InitStruct.Pin = GPIO_PIN_14 | GPIO_PIN_15;
@@ -264,22 +264,22 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pins : DAP_LED_1_Pin*/
-  GPIO_InitStruct.Pin = DAP_LED_1_Pin;
+  GPIO_InitStruct.Pin = DAP_LED_1_PIN;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(LED1_GPIO_Port, &GPIO_InitStruct); 
+  HAL_GPIO_Init(LED1_GPIO_PORT, &GPIO_InitStruct); 
   
   /*Configure GPIO pins : DAP_LED_2_Pin */
-  GPIO_InitStruct.Pin = DAP_LED_2_Pin;
+  GPIO_InitStruct.Pin = DAP_LED_2_PIN;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(LED1_GPIO_Port, &GPIO_InitStruct); 
+  HAL_GPIO_Init(LED1_GPIO_PORT, &GPIO_InitStruct); 
     
   /*Configure GPIO pins : USB_FS_Pin */
-  GPIO_InitStruct.Pin = USB_FS_Pin;
+  GPIO_InitStruct.Pin = USB_FS_PIN;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-  HAL_GPIO_Init(USB_FS_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(USB_FS_GPIO_PORT, &GPIO_InitStruct);
 
 }
 

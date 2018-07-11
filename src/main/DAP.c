@@ -149,16 +149,16 @@ static uint32_t DAP_HostStatus(uint8_t *request, uint8_t *response)
   switch (*request) {
     case DAP_DEBUGGER_CONNECTED:
       if (*(request+1) & 1) {
-        GPIOA->BSRR = DAP_LED_1_Pin;
+        DAP_LED_1_GPIO_PORT->BSRR = DAP_LED_1_PIN;
       } else {
-        GPIOA->BRR = DAP_LED_1_Pin;
+        DAP_LED_1_GPIO_PORT->BRR = DAP_LED_1_PIN;
       }
       break;
     case DAP_TARGET_RUNNING:
       if (*(request+1) & 1) {
-        GPIOA->BSRR = DAP_LED_2_Pin;
+        DAP_LED_2_GPIO_PORT->BSRR = DAP_LED_2_PIN;
       } else {
-        GPIOA->BRR = DAP_LED_2_Pin;
+        DAP_LED_2_GPIO_PORT->BRR = DAP_LED_2_PIN;
       }
       break;
     default:
@@ -188,7 +188,7 @@ static uint32_t DAP_Connect(uint8_t *request, uint8_t *response)
     case DAP_PORT_SWD:
       DAP_Data.debug_port = DAP_PORT_SWD;
       PORT_SWD_SETUP();
-      GPIOC->BRR = LED1_Pin;
+      LED1_GPIO_PORT->BRR = LED1_PIN;
       break;
 
     default:
@@ -210,7 +210,7 @@ static uint32_t DAP_Disconnect(uint8_t *response)
 
   PORT_OFF();
 
-  GPIOC->BSRR = LED1_Pin;
+  LED1_GPIO_PORT->BSRR = LED1_PIN;
 
   *response = DAP_OK;
   return (1);

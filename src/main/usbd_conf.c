@@ -697,11 +697,11 @@ void HAL_PCDEx_SetConnectionState(PCD_HandleTypeDef *hpcd, uint8_t state)
 {
   if (state == 1)
   {
-    HAL_GPIO_WritePin(USB_FS_GPIO_Port, USB_FS_Pin, SET);
+    HAL_GPIO_WritePin(USB_FS_GPIO_PORT, USB_FS_PIN, SET);
   }
   else
   {
-    HAL_GPIO_WritePin(USB_FS_GPIO_Port, USB_FS_Pin, RESET);
+    HAL_GPIO_WritePin(USB_FS_GPIO_PORT, USB_FS_PIN, RESET);
   }
 }
 

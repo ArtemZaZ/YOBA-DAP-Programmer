@@ -136,15 +136,15 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
     PA9     ------> USART1_TX
     PA10     ------> USART1_RX 
     */
-    GPIO_InitStruct.Pin = DBG_TX_Pin;
+    GPIO_InitStruct.Pin = DBG_TX_PIN;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-    HAL_GPIO_Init(DBG_TX_GPIO_Port, &GPIO_InitStruct);
+    HAL_GPIO_Init(DBG_TX_GPIO_PORT, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = DBG_RX_Pin;
+    GPIO_InitStruct.Pin = DBG_RX_PIN;
     GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
     GPIO_InitStruct.Pull = GPIO_PULLUP;
-    HAL_GPIO_Init(DBG_RX_GPIO_Port, &GPIO_InitStruct);
+    HAL_GPIO_Init(DBG_RX_GPIO_PORT, &GPIO_InitStruct);
 
     /* Peripheral DMA init*/
   
@@ -191,15 +191,15 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
     PA2     ------> USART2_TX
     PA3     ------> USART2_RX 
     */
-    GPIO_InitStruct.Pin = TX_Pin;
+    GPIO_InitStruct.Pin = TX_PIN;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-    HAL_GPIO_Init(TX_GPIO_Port, &GPIO_InitStruct);
+    HAL_GPIO_Init(TX_GPIO_PORT, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = RX_Pin;
+    GPIO_InitStruct.Pin = RX_PIN;
     GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
     GPIO_InitStruct.Pull = GPIO_PULLUP;
-    HAL_GPIO_Init(RX_GPIO_Port, &GPIO_InitStruct);
+    HAL_GPIO_Init(RX_GPIO_PORT, &GPIO_InitStruct);
 
     /* Peripheral DMA init*/
   
@@ -252,7 +252,8 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* huart)
     PA9     ------> USART1_TX
     PA10     ------> USART1_RX 
     */
-    HAL_GPIO_DeInit(GPIOA, DBG_TX_Pin|DBG_RX_Pin);
+    HAL_GPIO_DeInit(DBG_TX_GPIO_PORT, DBG_TX_PIN);
+    HAL_GPIO_DeInit(DBG_RX_GPIO_PORT, DBG_RX_PIN);
 
     /* Peripheral DMA DeInit*/
     HAL_DMA_DeInit(huart->hdmarx);
@@ -270,7 +271,8 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* huart)
     PA2     ------> USART2_TX
     PA3     ------> USART2_RX 
     */
-    HAL_GPIO_DeInit(GPIOA, TX_Pin|RX_Pin);
+    HAL_GPIO_DeInit(TX_GPIO_PORT, TX_PIN);
+    HAL_GPIO_DeInit(RX_GPIO_PORT, RX_PIN);
 
     /* Peripheral DMA DeInit*/
     HAL_DMA_DeInit(huart->hdmarx);
