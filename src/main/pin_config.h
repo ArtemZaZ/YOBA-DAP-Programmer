@@ -3,12 +3,16 @@
 #include "stm32f1xx_hal_gpio.h"
 
 /* определение портов и пинов SWD */
-#define SWDIO_PORT	GPIOA
-#define SWDIO_PIN	  GPIO_PIN_4
-#define SWCLK_PORT	GPIOA
-#define SWCLK_PIN	  GPIO_PIN_5
-#define nRESET_PORT	GPIOA
-#define nRESET_PIN	GPIO_PIN_6
+#define SWDIO_PORT	        GPIOB
+#define SWDIO_PIN_NUMBER	  8
+#define SWCLK_PORT	        GPIOA
+#define SWCLK_PIN_NUMBER	  5
+#define nRESET_PORT	        GPIOA
+#define nRESET_PIN_NUMBER	  6
+
+#define SWDIO_PIN   ((uint16_t)(1 << SWDIO_PIN_NUMBER))
+#define SWCLK_PIN   ((uint16_t)(1 << SWCLK_PIN_NUMBER))
+#define nRESET_PIN  ((uint16_t)(1 << nRESET_PIN_NUMBER))
 
 /* остальные определения */
 #define LED1_Pin GPIO_PIN_13

@@ -2,6 +2,7 @@
 #define __DAP_CONFIG_H__
 
 #include "stm32f1xx_hal.h"
+#include "stdint.h"
 
 #define CPU_CLOCK             72000000        ///< Specifies the CPU Clock in Hz
 #define IO_PORT_WRITE_CYCLES  2 ///< I/O Cycles: 2=default, 1=Cortex-M0+ fast I/0
@@ -9,36 +10,72 @@
 #define DAP_PACKET_SIZE       64
 #define DAP_PACKET_COUNT      1
 
-#define PIN_nRESET_LOW()   do {  \
-  nRESET_PORT->CRL = (nRESET_PORT->CRL & ~(GPIO_CRL_MODE6 | GPIO_CRL_CNF6)) \
-                | (0x07 << GPIO_CRL_MODE6_Pos);                 \
-  } while (0)
 
-#define PIN_nRESET_HIGH()  do {  \
-  nRESET_PORT->CRL = (nRESET_PORT->CRL & ~(GPIO_CRL_MODE6 | GPIO_CRL_CNF6)) \
-                | (0x04 << GPIO_CRL_MODE6_Pos);                 \
+/* PIN_nRESET_LOW() */
+#if (nRESET_PIN_NUMBER < 8)   // т.к. в stmf1 регистры CR разделены на CRL и CRH приходится так костылить
+# define PIN_nRESET_LOW()   do {  \
+  nRESET_PORT->CRL = (nRESET_PORT->CRL & ~(0xF << (4*nRESET_PIN_NUMBER))) \
+                | (0x07 << (4*nRESET_PIN_NUMBER)); \
   } while (0)
+#else    
+# define PIN_nRESET_LOW()   do {  \
+  nRESET_PORT->CRH = (nRESET_PORT->CRH & ~(0xF << (4*(nRESET_PIN_NUMBER - 8)))) \
+                | (0x07 << (4*(nRESET_PIN_NUMBER - 8))); \
+  } while (0)
+#endif  /* PIN_nRESET_LOW() */
 
+  
+/* PIN_nRESET_HIGH() */
+#if (nRESET_PIN_NUMBER < 8)   
+# define PIN_nRESET_HIGH()  do {  \
+  nRESET_PORT->CRL = (nRESET_PORT->CRL & ~(0xF << (4*nRESET_PIN_NUMBER))) \
+                | (0x04 << (4*nRESET_PIN_NUMBER));  \
+  } while (0)
+#else
+  define PIN_nRESET_HIGH()  do {  \
+  nRESET_PORT->CRH = (nRESET_PORT->CRH & ~(0xF << (4*(nRESET_PIN_NUMBER - 8)))) \
+                | (0x04 << (4*(nRESET_PIN_NUMBER - 8)));  \
+  } while (0)
+#endif  /* PIN_nRESET_HIGH() */
+
+  
+/*   PIN_SWDIO_OUT_ENABLE() */
 /** SWDIO I/O pin: Switch to Output mode (used in SWD mode only).
 Configure the SWDIO DAP hardware I/O pin to output mode. This function is
 called prior \ref PIN_SWDIO_OUT function calls.
 */
-#define PIN_SWDIO_OUT_ENABLE(void) do { \
-  SWDIO_PORT->CRL = (SWDIO_PORT->CRL & ~(GPIO_CRL_MODE4 | GPIO_CRL_CNF4)) \
-                | (0x03 << GPIO_CRL_MODE4_Pos);                 \
+#if (SWDIO_PIN_NUMBER < 8)
+# define PIN_SWDIO_OUT_ENABLE(void) do { \
+  SWDIO_PORT->CRL = (SWDIO_PORT->CRL & ~(0xF << (4*SWDIO_PIN_NUMBER))) \
+                | (0x03 << (4*SWDIO_PIN_NUMBER)); \
   } while (0)
-
+#else 
+# define PIN_SWDIO_OUT_ENABLE(void) do { \
+  SWDIO_PORT->CRH = (SWDIO_PORT->CRH & ~(0xF << (4*(SWDIO_PIN_NUMBER - 8)))) \
+                | (0x03 << (4*(SWDIO_PIN_NUMBER - 8))); \
+  } while (0)
+#endif  /*   PIN_SWDIO_OUT_ENABLE() */
+  
+  
+/* PIN_SWDIO_OUT_DISABLE() */  
 /** SWDIO I/O pin: Switch to Input mode (used in SWD mode only).
 Configure the SWDIO DAP hardware I/O pin to input mode. This function is
 called prior \ref PIN_SWDIO_IN function calls.
 */
-#define PIN_SWDIO_OUT_DISABLE(void) do { \
-  SWDIO_PORT->CRL = (SWDIO_PORT->CRL & ~(GPIO_CRL_MODE4 | GPIO_CRL_CNF4)) \
-                | (0x08 << GPIO_CRL_MODE4_Pos);                 \
+#if (SWDIO_PIN_NUMBER < 8)
+# define PIN_SWDIO_OUT_DISABLE(void) do { \
+  SWDIO_PORT->CRL = (SWDIO_PORT->CRL & ~(0xF << (4*SWDIO_PIN_NUMBER))) \
+                | (0x08 << (4*SWDIO_PIN_NUMBER));                 \
   } while (0)
+#else
+# define PIN_SWDIO_OUT_DISABLE(void) do { \
+  SWDIO_PORT->CRH = (SWDIO_PORT->CRH & ~(0xF << (4*(SWDIO_PIN_NUMBER - 8)))) \
+                | (0x08 << (4*(SWDIO_PIN_NUMBER - 8)));   \
+  } while (0)
+#endif  /* PIN_SWDIO_OUT_DISABLE() */ 
+  
 
-// SWCLK/TCK I/O pin -------------------------------------
-
+// SWCLK/TCK I/O pin -------------------------------------  
 /** SWCLK/TCK I/O pin: Get Input.
 \return Current status of the SWCLK/TCK DAP hardware I/O pin.
 */
